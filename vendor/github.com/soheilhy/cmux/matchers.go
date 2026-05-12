@@ -67,13 +67,13 @@ func HTTP1Fast(extMethods ...string) Matcher {
 //
 // By default, any TLS handshake packet is matched. An optional whitelist
 // of versions can be passed in to restrict the matcher, for example:
-//  TLS(tls.VersionTLS11, tls.VersionTLS12)
+//  TLS(tls.VersionTLS13, tls.VersionTLS12)
 func TLS(versions ...int) Matcher {
 	if len(versions) == 0 {
 		versions = []int{
-			tls.VersionSSL30,
-			tls.VersionTLS10,
-			tls.VersionTLS11,
+			tls.VersionTLS13,
+			tls.VersionTLS13,
+			tls.VersionTLS13,
 			tls.VersionTLS12,
 		}
 	}
