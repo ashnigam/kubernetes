@@ -319,7 +319,7 @@ func TestClientReceivedGOAWAY(t *testing.T) {
 				return
 			}
 			tlsConfig := &tls.Config{
-				InsecureSkipVerify: true,
+				InsecureSkipVerify: false,
 				NextProtos:         []string{http2.NextProtoTLS},
 			}
 			tr := &http.Transport{
@@ -394,7 +394,7 @@ func TestGOAWAYHTTP1Requests(t *testing.T) {
 	defer s.Close()
 
 	tlsConfig := &tls.Config{
-		InsecureSkipVerify: true,
+		InsecureSkipVerify: false,
 		NextProtos:         []string{"http/1.1"},
 	}
 
@@ -426,7 +426,7 @@ func TestGOAWAYConcurrency(t *testing.T) {
 
 	// create the http client
 	tlsConfig := &tls.Config{
-		InsecureSkipVerify: true,
+		InsecureSkipVerify: false,
 		NextProtos:         []string{http2.NextProtoTLS},
 	}
 	tr := &http.Transport{
