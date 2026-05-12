@@ -1092,7 +1092,7 @@ func PokeHTTP(host string, port int, path string, params *HTTPPokeParams) HTTPPo
 func httpGetNoConnectionPoolTimeout(url string, timeout time.Duration) (*http.Response, error) {
 	tr := utilnet.SetTransportDefaults(&http.Transport{
 		DisableKeepAlives: true,
-		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig:   &tls.Config{InsecureSkipVerify: false},
 	})
 	client := &http.Client{
 		Transport: tr,

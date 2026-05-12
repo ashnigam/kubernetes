@@ -425,7 +425,7 @@ func TestProxyUpgrade(t *testing.T) {
 			},
 			ProxyTransport: utilnet.SetTransportDefaults(&http.Transport{TLSClientConfig: &tls.Config{
 				NextProtos:         []string{"http2", "http/1.1"},
-				InsecureSkipVerify: true,
+				InsecureSkipVerify: false,
 			}}),
 		},
 		"https (invalid hostname + InsecureSkipVerify)": {
@@ -441,7 +441,7 @@ func TestProxyUpgrade(t *testing.T) {
 				ts.StartTLS()
 				return ts
 			},
-			ProxyTransport: utilnet.SetTransportDefaults(&http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}),
+			ProxyTransport: utilnet.SetTransportDefaults(&http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: false}}),
 		},
 		"https (valid hostname + RootCAs)": {
 			ServerFunc: func(h http.Handler) *httptest.Server {

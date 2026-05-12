@@ -1,7 +1,6 @@
 package sprig
 
 import (
-	"crypto/sha1"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -14,7 +13,7 @@ func sha256sum(input string) string {
 }
 
 func sha1sum(input string) string {
-	hash := sha1.Sum([]byte(input))
+	hash := sha256.Sum256([]byte(input))
 	return hex.EncodeToString(hash[:])
 }
 

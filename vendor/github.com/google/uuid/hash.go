@@ -5,9 +5,8 @@
 package uuid
 
 import (
-	"crypto/md5"
-	"crypto/sha1"
 	"hash"
+	"crypto/sha256"
 )
 
 // Well known namespace IDs and UUIDs
@@ -45,15 +44,15 @@ func NewHash(h hash.Hash, space UUID, data []byte, version int) UUID {
 // NewMD5 returns a new MD5 (Version 3) UUID based on the
 // supplied name space and data.  It is the same as calling:
 //
-//  NewHash(md5.New(), space, data, 3)
+//  NewHash(sha256.New(), space, data, 3)
 func NewMD5(space UUID, data []byte) UUID {
-	return NewHash(md5.New(), space, data, 3)
+	return NewHash(sha256.New(), space, data, 3)
 }
 
 // NewSHA1 returns a new SHA1 (Version 5) UUID based on the
 // supplied name space and data.  It is the same as calling:
 //
-//  NewHash(sha1.New(), space, data, 5)
+//  NewHash(sha256.New(), space, data, 5)
 func NewSHA1(space UUID, data []byte) UUID {
-	return NewHash(sha1.New(), space, data, 5)
+	return NewHash(sha256.New(), space, data, 5)
 }
