@@ -227,7 +227,7 @@ func RemoveExtendedResource(ctx context.Context, clientSet clientset.Interface, 
 
 func HealthCheck(url string) bool {
 	insecureTransport := http.DefaultTransport.(*http.Transport).Clone()
-	insecureTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	insecureTransport.TLSClientConfig = &tls.Config{InsecureSkipVerify: false}
 	insecureHTTPClient := &http.Client{
 		Transport: insecureTransport,
 	}
