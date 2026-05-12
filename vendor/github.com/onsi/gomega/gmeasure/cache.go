@@ -1,13 +1,13 @@
 package gmeasure
 
 import (
-	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
 
 	"github.com/onsi/gomega/internal/gutil"
+	"crypto/sha256"
 )
 
 const CACHE_EXT = ".gmeasure-cache"
@@ -49,7 +49,7 @@ type CachedExperimentHeader struct {
 }
 
 func (cache ExperimentCache) hashOf(name string) string {
-	return fmt.Sprintf("%x", md5.Sum([]byte(name)))
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(name)))
 }
 
 func (cache ExperimentCache) readHeader(filename string) (CachedExperimentHeader, error) {
