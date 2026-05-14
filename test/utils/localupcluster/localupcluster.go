@@ -475,7 +475,7 @@ func (c *Cluster) checkReadiness(tCtx ktesting.TContext, cmd *Cmd) {
 	tlsConfigWithClientCert.InsecureSkipVerify = true
 
 	// For other components we can skip TLS verification because they use self-signed certs.
-	insecureTLSConfig := &tls.Config{InsecureSkipVerify: true}
+	insecureTLSConfig := &tls.Config{InsecureSkipVerify: false}
 
 	switch {
 	case strings.HasPrefix(cmd.Name, string(KubeAPIServer)):

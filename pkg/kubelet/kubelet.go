@@ -593,7 +593,7 @@ func NewMainKubelet(ctx context.Context,
 	// critical that credentials not leak from the client to arbitrary hosts.
 	insecureContainerLifecycleHTTPClient := &http.Client{
 		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
 		},
 		CheckRedirect: httpprobe.RedirectChecker(false),
 	}
