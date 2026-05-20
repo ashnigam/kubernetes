@@ -505,7 +505,7 @@ func dialURLWithTransport(ctx context.Context, url *url.URL, transport http.Roun
 			}
 
 			if tlsConfig == nil {
-				tlsConfig = &tls.Config{InsecureSkipVerify: true}
+				tlsConfig = &tls.Config{InsecureSkipVerify: false}
 			} else if len(tlsConfig.ServerName) == 0 && !tlsConfig.InsecureSkipVerify {
 				inferredHost := dialAddr
 				if host, _, err := net.SplitHostPort(dialAddr); err == nil {
