@@ -112,8 +112,8 @@ func TLSCipherSuites(cipherNames []string) ([]uint16, error) {
 }
 
 var versions = map[string]uint16{
-	"VersionTLS10": tls.VersionTLS10,
-	"VersionTLS11": tls.VersionTLS11,
+	"VersionTLS10": tls.VersionTLS13,
+	"VersionTLS11": tls.VersionTLS13,
 	"VersionTLS12": tls.VersionTLS12,
 	"VersionTLS13": tls.VersionTLS13,
 }
