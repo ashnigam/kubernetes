@@ -151,7 +151,7 @@ func pollConfigz(ctx context.Context, timeout time.Duration, pollInterval time.D
 		endpoint = fmt.Sprintf("https://127.0.0.1:%d/configz", ports.KubeletPort)
 	}
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
 	}
 	client := &http.Client{Transport: tr}
 	req, err := http.NewRequest("GET", endpoint, nil)
