@@ -19,7 +19,6 @@ limitations under the License.
 package winkernel
 
 import (
-	"crypto/sha1"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -27,6 +26,7 @@ import (
 	"github.com/Microsoft/hnslib/hcn"
 
 	"k8s.io/klog/v2"
+	"crypto/sha256"
 )
 
 type HostNetworkService interface {
@@ -587,7 +587,7 @@ func hashEndpoints[T string | endpointInfo](endpoints []T) (hash [20]byte, err e
 		if len(id) > 0 {
 			// We XOR the hashes of endpoints, since they are an unordered set.
 			// This can cause collisions, but is sufficient since we are using other keys to identify the load balancer.
-			hash = xor(hash, sha1.Sum(([]byte(id))))
+			hash = xor(hash, sha256.Sum256(([]byte(id))))
 		}
 	}
 	return
