@@ -214,7 +214,7 @@ func (emc *ExternalMetricsController) doRequestWithPortForward(ctx context.Conte
 	// re-use NewTransport which supports both SPDY and WebSocket according to KEP-4006
 	transport := e2epod.NewTransport(emc.clientSet, config)
 	// the external metrics server uses a self-signed certificate.
-	transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: true} //nolint:gosec
+	transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: false} //nolint:gosec
 	client := &http.Client{
 		Transport: transport,
 		Timeout:   30 * time.Second,
