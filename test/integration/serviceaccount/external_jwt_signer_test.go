@@ -41,6 +41,7 @@ import (
 	v1testing "k8s.io/kubernetes/pkg/serviceaccount/externaljwt/plugin/testing/v1"
 	"k8s.io/kubernetes/test/integration/framework"
 	"k8s.io/kubernetes/test/utils/ktesting"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func TestExternalJWTSigningAndAuth(t *testing.T) {
@@ -48,7 +49,7 @@ func TestExternalJWTSigningAndAuth(t *testing.T) {
 	featuregatetesting.SetFeatureGateDuringTest(t, utilfeature.DefaultFeatureGate, features.ExternalServiceAccountTokenSigner, true)
 
 	// Prep some keys to use with test.
-	key1, err := rsa.GenerateKey(rand.Reader, 2048)
+	key1, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		panic("Error while generating first RSA key")
 	}
