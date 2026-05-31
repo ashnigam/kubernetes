@@ -40,6 +40,7 @@ import (
 
 	utilnettesting "k8s.io/apimachinery/pkg/util/net/testing"
 	externaljwtv1 "k8s.io/externaljwt/apis/v1"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 var (
@@ -50,12 +51,12 @@ var (
 func init() {
 	var err error
 
-	rsaKey1, err = rsa.GenerateKey(rand.Reader, 2048)
+	rsaKey1, err = mldsa44.GenerateKey(nil)
 	if err != nil {
 		panic("Error while generating first RSA key")
 	}
 
-	rsaKey2, err = rsa.GenerateKey(rand.Reader, 2048)
+	rsaKey2, err = mldsa44.GenerateKey(nil)
 	if err != nil {
 		panic("Error while generating second RSA key")
 	}

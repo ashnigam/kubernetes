@@ -49,6 +49,7 @@ import (
 	"k8s.io/kubernetes/pkg/serviceaccount"
 	v1testing "k8s.io/kubernetes/pkg/serviceaccount/externaljwt/plugin/testing/v1"
 	netutils "k8s.io/utils/net"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func TestAddFlags(t *testing.T) {
@@ -330,7 +331,7 @@ func TestAddFlags(t *testing.T) {
 
 func TestCompleteForServiceAccount(t *testing.T) {
 
-	key, err := rsa.GenerateKey(rand.Reader, 2048)
+	key, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		panic("Error while generating first RSA key")
 	}
@@ -338,7 +339,7 @@ func TestCompleteForServiceAccount(t *testing.T) {
 	// Marshal the private key into PEM format
 	privateKeyPEM := &pem.Block{
 		Type:  "RSA PRIVATE KEY",
-		Bytes: x509.MarshalPKCS1PrivateKey(key),
+		Bytes: key.Bytes(),
 	}
 
 	// Open a file to write the private key

@@ -35,10 +35,11 @@ import (
 	"k8s.io/component-base/metrics"
 	"k8s.io/kubernetes/pkg/apis/certificates"
 	"k8s.io/utils/ptr"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func Test_countCSRDurationMetric(t *testing.T) {
-	caPrivateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	caPrivateKey, err := mldsa44.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}

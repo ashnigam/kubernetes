@@ -52,6 +52,7 @@ import (
 	"k8s.io/kubernetes/cmd/kube-apiserver/app/options"
 	"k8s.io/kubernetes/test/integration/framework"
 	"k8s.io/kubernetes/test/utils/ktesting"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func TestInsecurePodLogs(t *testing.T) {
@@ -321,7 +322,7 @@ type testCerts struct {
 func generateClientCert(t *testing.T) testCerts {
 	t.Helper()
 
-	caPrivateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	caPrivateKey, err := mldsa44.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -330,7 +331,7 @@ func generateClientCert(t *testing.T) testCerts {
 		t.Fatal(err)
 	}
 
-	clientCertKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	clientCertKey, err := mldsa44.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -34,6 +34,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/util/intstr"
 	"k8s.io/kubernetes/test/e2e/framework"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 // Constants for common values
@@ -61,7 +62,7 @@ const (
 func generateCA() (*x509.Certificate, *rsa.PrivateKey, error) {
 	ginkgo.By("Generating CA certificate and private key")
 
-	caPrivateKey, err := rsa.GenerateKey(rand.Reader, CertificateKeySize)
+	caPrivateKey, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to generate CA private key: %w", err)
 	}
@@ -94,7 +95,7 @@ func generateCA() (*x509.Certificate, *rsa.PrivateKey, error) {
 func generateServerCert(driverNamespace string, caCert *x509.Certificate, caPrivateKey *rsa.PrivateKey) ([]byte, []byte, error) {
 	ginkgo.By("Generating server certificate and private key")
 
-	serverPrivateKey, err := rsa.GenerateKey(rand.Reader, CertificateKeySize)
+	serverPrivateKey, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to generate server private key: %w", err)
 	}
@@ -119,7 +120,7 @@ func generateServerCert(driverNamespace string, caCert *x509.Certificate, caPriv
 		return nil, nil, fmt.Errorf("failed to create server certificate: %w", err)
 	}
 
-	serverKeyBytes := x509.MarshalPKCS1PrivateKey(serverPrivateKey)
+	serverKeyBytes := serverPrivateKey.Bytes()
 
 	return serverCertBytes, serverKeyBytes, nil
 }

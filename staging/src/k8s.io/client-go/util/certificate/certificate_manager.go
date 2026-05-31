@@ -42,6 +42,7 @@ import (
 	"k8s.io/client-go/util/cert"
 	"k8s.io/client-go/util/certificate/csr"
 	"k8s.io/client-go/util/keyutil"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 var (
@@ -764,7 +765,7 @@ func (m *manager) updateServerError(err error) error {
 
 func (m *manager) generateCSR() (template *x509.CertificateRequest, csrPEM []byte, keyPEM []byte, key interface{}, err error) {
 	// Generate a new private key.
-	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), cryptorand.Reader)
+	privateKey, err := mldsa44.GenerateKey(nil), cryptorand.Reader)
 	if err != nil {
 		return nil, nil, nil, nil, fmt.Errorf("unable to generate a new private key: %w", err)
 	}

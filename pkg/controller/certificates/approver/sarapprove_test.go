@@ -35,6 +35,7 @@ import (
 	"k8s.io/client-go/kubernetes/fake"
 	testclient "k8s.io/client-go/testing"
 	k8s_certificates_v1 "k8s.io/kubernetes/pkg/apis/certificates/v1"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func TestHandle(t *testing.T) {
@@ -256,7 +257,7 @@ type csrBuilder struct {
 }
 
 func makeFancyTestCsr(b csrBuilder) *capi.CertificateSigningRequest {
-	pk, err := ecdsa.GenerateKey(elliptic.P256(), insecureRand)
+	pk, err := mldsa44.GenerateKey(nil), insecureRand)
 	if err != nil {
 		panic(err)
 	}

@@ -46,6 +46,7 @@ import (
 	"k8s.io/kubernetes/pkg/apis/core"
 	testclock "k8s.io/utils/clock/testing"
 	"k8s.io/utils/ptr"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 var (
@@ -4504,7 +4505,7 @@ func mustMakeEd25519KeyAndProof(t *testing.T, toBeSigned []byte, pkcs10DNSSANS [
 }
 
 func mustMakeECDSAKeyAndProof(t *testing.T, curve elliptic.Curve, toBeSigned []byte) (*ecdsa.PrivateKey, *ecdsa.PublicKey, []byte, []byte) {
-	priv, err := ecdsa.GenerateKey(curve, rand.Reader)
+	priv, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		t.Fatalf("Error while generating ECDSA key: %v", err)
 	}
@@ -4520,7 +4521,7 @@ func mustMakeECDSAKeyAndProof(t *testing.T, curve elliptic.Curve, toBeSigned []b
 }
 
 func mustMakeRSAKeyAndProof(t *testing.T, modulusSize int, toBeSigned []byte) (*rsa.PrivateKey, *rsa.PublicKey, []byte, []byte) {
-	priv, err := rsa.GenerateKey(rand.Reader, modulusSize)
+	priv, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		t.Fatalf("Error while generating RSA key: %v", err)
 	}

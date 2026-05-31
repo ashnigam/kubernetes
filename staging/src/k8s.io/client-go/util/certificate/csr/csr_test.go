@@ -26,10 +26,11 @@ import (
 	"testing"
 
 	certificates "k8s.io/api/certificates/v1"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func TestEnsureCompatible(t *testing.T) {
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	privateKey, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		t.Fatal(err)
 	}

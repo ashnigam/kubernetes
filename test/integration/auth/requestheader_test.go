@@ -39,6 +39,7 @@ import (
 	"k8s.io/kubernetes/test/integration/framework"
 	testutils "k8s.io/kubernetes/test/utils"
 	"k8s.io/kubernetes/test/utils/ktesting"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func TestAuthnToKAS(t *testing.T) {
@@ -133,7 +134,7 @@ func TestAuthnToKAS(t *testing.T) {
 }
 
 func newTestCAWithClient(caSubject pkix.Name, clientSubject pkix.Name) (caPEMBytes, clientCertPEMBytes, clientKeyPEMBytes []byte, err error) {
-	caPrivateKey, err := rsa.GenerateKey(rand.Reader, 4096)
+	caPrivateKey, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -148,7 +149,7 @@ func newTestCAWithClient(caSubject pkix.Name, clientSubject pkix.Name) (caPEMByt
 		return nil, nil, nil, err
 	}
 
-	clientCertPrivateKey, err := rsa.GenerateKey(rand.Reader, 4096)
+	clientCertPrivateKey, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		return nil, nil, nil, err
 	}

@@ -57,6 +57,7 @@ import (
 	"k8s.io/kubernetes/pkg/auth/nodeidentifier"
 	"k8s.io/kubernetes/pkg/features"
 	"k8s.io/utils/ptr"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 func makeTestPod(namespace, name, node string, mirror bool) (*api.Pod, *corev1.Pod) {
@@ -420,7 +421,7 @@ func Test_nodePlugin_Admit(t *testing.T) {
 		aLabeledPod  = withLabels(coremypod, labelsA)
 		abLabeledPod = withLabels(coremypod, labelsAB)
 
-		privKey, _ = rsa.GenerateKey(rand.Reader, 2048)
+		privKey, _ = mldsa44.GenerateKey(nil)
 
 		csiDriverWithAudience = &storagev1.CSIDriver{
 			ObjectMeta: metav1.ObjectMeta{

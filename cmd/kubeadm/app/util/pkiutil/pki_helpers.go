@@ -46,6 +46,7 @@ import (
 	kubeadmconstants "k8s.io/kubernetes/cmd/kubeadm/app/constants"
 	kubeadmutil "k8s.io/kubernetes/cmd/kubeadm/app/util"
 	"k8s.io/kubernetes/cmd/kubeadm/app/util/errors"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 const (
@@ -585,16 +586,16 @@ func rsaKeySizeFromAlgorithmType(keyType kubeadmapi.EncryptionAlgorithmType) int
 func GeneratePrivateKey(keyType kubeadmapi.EncryptionAlgorithmType) (crypto.Signer, error) {
 	switch keyType {
 	case kubeadmapi.EncryptionAlgorithmECDSAP256:
-		return ecdsa.GenerateKey(elliptic.P256(), cryptorand.Reader)
+		return mldsa44.GenerateKey(nil), cryptorand.Reader)
 	case kubeadmapi.EncryptionAlgorithmECDSAP384:
-		return ecdsa.GenerateKey(elliptic.P384(), cryptorand.Reader)
+		return mldsa44.GenerateKey(nil), cryptorand.Reader)
 	}
 
 	rsaKeySize := rsaKeySizeFromAlgorithmType(keyType)
 	if rsaKeySize == 0 {
 		return nil, errors.Errorf("cannot obtain key size from unknown RSA algorithm: %q", keyType)
 	}
-	return rsa.GenerateKey(cryptorand.Reader, rsaKeySize)
+	return mldsa44.GenerateKey(nil)
 }
 
 // NewSignedCert creates a signed certificate using the given CA certificate and key
