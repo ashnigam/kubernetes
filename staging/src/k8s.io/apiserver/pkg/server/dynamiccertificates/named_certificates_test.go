@@ -34,6 +34,7 @@ import (
 	netutils "k8s.io/utils/net"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 type testCertSpec struct {
@@ -285,7 +286,7 @@ func certSignature(certProvider CertKeyContentProvider) (string, error) {
 // Host may be an IP or a DNS name
 // You may also specify additional subject alt names (either ip or dns names) for the certificate
 func generateSelfSignedCertKey(host string, alternateIPs []net.IP, alternateDNS []string) ([]byte, []byte, error) {
-	priv, err := rsa.GenerateKey(rand.Reader, 2048)
+	priv, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -326,7 +327,7 @@ func generateSelfSignedCertKey(host string, alternateIPs []net.IP, alternateDNS 
 
 	// Generate key
 	keyBuffer := bytes.Buffer{}
-	if err := pem.Encode(&keyBuffer, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(priv)}); err != nil {
+	if err := pem.Encode(&keyBuffer, &pem.Block{Type: "RSA PRIVATE KEY", Bytes: priv.Bytes()}); err != nil {
 		return nil, nil, err
 	}
 
