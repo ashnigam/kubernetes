@@ -47,6 +47,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd/api"
 	"k8s.io/client-go/transport"
 	testingclock "k8s.io/utils/clock/testing"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 var (
@@ -1584,7 +1585,7 @@ func TestInstallHintRateLimit(t *testing.T) {
 // genClientCert generates an x509 certificate for testing. Certificate and key
 // are returned in PEM encoding. The generated cert expires in 24 hours.
 func genClientCert(t *testing.T) ([]byte, []byte) {
-	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	key, err := mldsa44.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}
