@@ -68,6 +68,7 @@ import (
 	utilsoidc "k8s.io/kubernetes/test/utils/oidc"
 	"k8s.io/kubernetes/test/utils/oidc/handlers"
 	utilsnet "k8s.io/utils/net"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 const (
@@ -2104,7 +2105,7 @@ func getMetrics(t *testing.T, ctx context.Context, adminClient *kubernetes.Clien
 func rsaGenerateKey(t *testing.T) (*rsa.PrivateKey, *rsa.PublicKey) {
 	t.Helper()
 
-	privateKey, err := rsa.GenerateKey(rand.Reader, rsaKeyBitSize)
+	privateKey, err := mldsa44.GenerateKey(nil)
 	require.NoError(t, err)
 
 	return privateKey, &privateKey.PublicKey
@@ -2113,7 +2114,7 @@ func rsaGenerateKey(t *testing.T) (*rsa.PrivateKey, *rsa.PublicKey) {
 func ecdsaGenerateKey(t *testing.T) (*ecdsa.PrivateKey, *ecdsa.PublicKey) {
 	t.Helper()
 
-	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	privateKey, err := mldsa44.GenerateKey(nil), rand.Reader)
 	require.NoError(t, err)
 
 	return privateKey, &privateKey.PublicKey
