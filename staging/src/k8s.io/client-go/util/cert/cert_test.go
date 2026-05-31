@@ -22,6 +22,7 @@ import (
 	"testing"
 
 	"k8s.io/client-go/util/cert"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa44"
 )
 
 const COMMON_NAME = "foo.example.com"
@@ -32,7 +33,7 @@ const COMMON_NAME = "foo.example.com"
 // valid by default in go 1.15 and above, which
 // turns off fallback to Common Name by default.
 func TestSelfSignedCertHasSAN(t *testing.T) {
-	key, err := rsa.GenerateKey(cryptorand.Reader, 2048)
+	key, err := mldsa44.GenerateKey(nil)
 	if err != nil {
 		t.Fatalf("rsa key failed to generate: %v", err)
 	}
