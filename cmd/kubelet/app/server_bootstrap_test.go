@@ -46,6 +46,7 @@ import (
 	"k8s.io/component-base/featuregate"
 	capihelper "k8s.io/kubernetes/pkg/apis/certificates/v1"
 	"k8s.io/kubernetes/pkg/controller/certificates/authority"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 // Test_buildClientCertificateManager validates that we can build a local client cert
@@ -58,7 +59,7 @@ func Test_buildClientCertificateManager(t *testing.T) {
 	}
 	defer func() { os.RemoveAll(testDir) }()
 
-	serverPrivateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	serverPrivateKey, err := mldsa65.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -405,7 +406,7 @@ func (s *csrSimulator) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 // genClientCert generates an x509 certificate for testing. Certificate and key
 // are returned in PEM encoding.
 func genClientCert(t *testing.T, from, to time.Time) ([]byte, []byte) {
-	key, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	key, err := mldsa65.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}

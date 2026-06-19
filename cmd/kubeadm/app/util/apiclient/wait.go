@@ -261,7 +261,7 @@ func (w *KubeWaiter) WaitForControlPlaneComponents(podMap map[string]*v1.Pod, ap
 
 		go func(comp controlPlaneComponent) {
 			tr := &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+				TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
 			}
 			client := &http.Client{Transport: tr}
 			start := time.Now()

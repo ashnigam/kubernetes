@@ -44,6 +44,7 @@ import (
 	"k8s.io/kubernetes/cmd/kube-apiserver/app/options"
 	"k8s.io/kubernetes/test/integration/framework"
 	"k8s.io/kubernetes/test/utils/ktesting"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 type caWithClient struct {
@@ -64,7 +65,7 @@ func newTestCAWithClient(caSubject pkix.Name, caSerial *big.Int, clientSubject p
 		BasicConstraintsValid: true,
 	}
 
-	caPrivateKey, err := rsa.GenerateKey(rand.Reader, 4096)
+	caPrivateKey, err := mldsa65.GenerateKey(nil)
 	if err != nil {
 		return nil, err
 	}
@@ -92,7 +93,7 @@ func newTestCAWithClient(caSubject pkix.Name, caSerial *big.Int, clientSubject p
 		KeyUsage:     x509.KeyUsageDigitalSignature,
 	}
 
-	clientCertPrivateKey, err := rsa.GenerateKey(rand.Reader, 4096)
+	clientCertPrivateKey, err := mldsa65.GenerateKey(nil)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +101,7 @@ func newTestCAWithClient(caSubject pkix.Name, caSerial *big.Int, clientSubject p
 	clientCertPrivateKeyPEM := new(bytes.Buffer)
 	err = pem.Encode(clientCertPrivateKeyPEM, &pem.Block{
 		Type:  "RSA PRIVATE KEY",
-		Bytes: x509.MarshalPKCS1PrivateKey(clientCertPrivateKey),
+		Bytes: clientCertPrivateKey.Bytes(),
 	})
 	if err != nil {
 		return nil, err
