@@ -40,6 +40,7 @@ import (
 	certutil "k8s.io/client-go/util/cert"
 	featuregatetesting "k8s.io/component-base/featuregate/testing"
 	"k8s.io/utils/ptr"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 func TestValidateAuthenticationConfiguration(t *testing.T) {
@@ -1035,7 +1036,7 @@ func TestValidateCertificateAuthority(t *testing.T) {
 		{
 			name: "valid certificate authority",
 			in: func() string {
-				caPrivateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+				caPrivateKey, err := mldsa65.GenerateKey(nil), rand.Reader)
 				if err != nil {
 					t.Fatal(err)
 				}
