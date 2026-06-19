@@ -28,6 +28,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 const (
@@ -43,7 +44,7 @@ const (
 
 // MakeEllipticPrivateKeyPEM creates an ECDSA private key
 func MakeEllipticPrivateKeyPEM() ([]byte, error) {
-	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), cryptorand.Reader)
+	privateKey, err := mldsa65.GenerateKey(nil), cryptorand.Reader)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +111,7 @@ func MarshalPrivateKeyToPEM(privateKey crypto.PrivateKey) ([]byte, error) {
 	case *rsa.PrivateKey:
 		block := &pem.Block{
 			Type:  RSAPrivateKeyBlockType,
-			Bytes: x509.MarshalPKCS1PrivateKey(t),
+			Bytes: t.Bytes(),
 		}
 		return pem.EncodeToMemory(block), nil
 	default:
@@ -261,7 +262,7 @@ func parseRSAPrivateKey(data []byte) (*rsa.PrivateKey, error) {
 
 	// Parse the key
 	var parsedKey interface{}
-	if parsedKey, err = x509.ParsePKCS1PrivateKey(data); err != nil {
+	if parsedKey, err = mldsa65.ParsePrivateKey(data); err != nil {
 		if parsedKey, err = x509.ParsePKCS8PrivateKey(data); err != nil {
 			return nil, err
 		}
