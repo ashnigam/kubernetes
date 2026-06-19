@@ -33,10 +33,11 @@ import (
 	"github.com/google/go-cmp/cmp/cmpopts"
 
 	capi "k8s.io/api/certificates/v1"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 func TestCertificateAuthority(t *testing.T) {
-	caKey, err := ecdsa.GenerateKey(elliptic.P224(), rand.Reader)
+	caKey, err := mldsa65.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,7 +193,7 @@ func TestCertificateAuthority(t *testing.T) {
 		},
 	}
 
-	crKey, err := ecdsa.GenerateKey(elliptic.P224(), rand.Reader)
+	crKey, err := mldsa65.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}
