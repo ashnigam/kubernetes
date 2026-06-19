@@ -34,6 +34,7 @@ import (
 	netutils "k8s.io/utils/net"
 
 	kubeadmapi "k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 var (
@@ -73,12 +74,12 @@ func TestMain(m *testing.M) {
 		panic(fmt.Sprintf("Failed generating serving cert/key: %v", err))
 	}
 
-	ecdsaP256Key, err = ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	ecdsaP256Key, err = mldsa65.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		panic("Could not generate ECDSA P256 key")
 	}
 
-	ecdsaP384Key, err = ecdsa.GenerateKey(elliptic.P384(), rand.Reader)
+	ecdsaP384Key, err = mldsa65.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		panic("Could not generate ECDSA P384 key")
 	}
