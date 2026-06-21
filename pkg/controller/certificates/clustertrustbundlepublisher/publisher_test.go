@@ -31,6 +31,7 @@ import (
 	"k8s.io/client-go/tools/cache"
 	certutil "k8s.io/client-go/util/cert"
 	"k8s.io/kubernetes/test/utils/ktesting"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 const testSignerName = "test.test/testSigner"
@@ -348,7 +349,7 @@ func filterOutListWatch(actions []clienttesting.Action) []clienttesting.Action {
 }
 
 func testingCABundlleProvider(t *testing.T) dynamiccertificates.CAContentProvider {
-	key, err := ecdsa.GenerateKey(elliptic.P256(), cryptorand.Reader)
+	key, err := mldsa65.GenerateKey(nil), cryptorand.Reader)
 	if err != nil {
 		t.Fatalf("failed to create a private key: %v", err)
 	}
