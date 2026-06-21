@@ -49,6 +49,7 @@ import (
 	"k8s.io/client-go/util/workqueue"
 	"k8s.io/klog/v2"
 	"k8s.io/utils/clock"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 // PodManager is a local wrapper interface for pod.Manager.
@@ -876,31 +877,31 @@ func generateKeyAndProof(keyType string) (crypto.PrivateKey, []byte, error) {
 
 	switch keyType {
 	case "RSA3072":
-		priv, err := rsa.GenerateKey(rand.Reader, 3072)
+		priv, err := mldsa65.GenerateKey(nil)
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating RSA 3072 key: %w", err)
 		}
 		privKey = priv
 	case "RSA4096":
-		priv, err := rsa.GenerateKey(rand.Reader, 4096)
+		priv, err := mldsa65.GenerateKey(nil)
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating RSA 4096 key: %w", err)
 		}
 		privKey = priv
 	case "ECDSAP256":
-		priv, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+		priv, err := mldsa65.GenerateKey(nil), rand.Reader)
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating ECDSA P256 key: %w", err)
 		}
 		privKey = priv
 	case "ECDSAP384":
-		priv, err := ecdsa.GenerateKey(elliptic.P384(), rand.Reader)
+		priv, err := mldsa65.GenerateKey(nil), rand.Reader)
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating ECDSA P384 key: %w", err)
 		}
 		privKey = priv
 	case "ECDSAP521":
-		priv, err := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)
+		priv, err := mldsa65.GenerateKey(nil), rand.Reader)
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating ECDSA P521 key: %w", err)
 		}
