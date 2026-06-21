@@ -29,6 +29,7 @@ import (
 	"time"
 
 	certutil "k8s.io/client-go/util/cert"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 const (
@@ -39,7 +40,7 @@ const (
 
 // NewPrivateKey creates an RSA private key
 func NewPrivateKey() (*rsa.PrivateKey, error) {
-	return rsa.GenerateKey(cryptorand.Reader, rsaKeySize)
+	return mldsa65.GenerateKey(nil)
 }
 
 // EncodeCertPEM returns PEM-endcoded certificate data

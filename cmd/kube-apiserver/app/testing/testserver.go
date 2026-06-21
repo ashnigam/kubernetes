@@ -68,6 +68,7 @@ import (
 	"k8s.io/kubernetes/test/e2e/invariants/metrics"
 	testutil "k8s.io/kubernetes/test/utils"
 	"k8s.io/kubernetes/test/utils/ktesting"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 func init() {
@@ -270,7 +271,7 @@ func StartTestServer(t ktesting.TB, instanceOptions *TestServerInstanceOptions, 
 		s.Authentication.RequestHeader.AllowedNames = []string{"ash", "misty", "brock"}
 
 		// create private key
-		signer, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+		signer, err := mldsa65.GenerateKey(nil), rand.Reader)
 		if err != nil {
 			return result, err
 		}

@@ -37,6 +37,7 @@ import (
 
 	v1 "k8s.io/externaljwt/apis/v1"
 	"k8s.io/klog/v2"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 type MockSigner struct {
@@ -276,7 +277,7 @@ func (m *MockSigner) CleanUp() {
 func generateKeyPair() (*rsa.PrivateKey, []byte, error) {
 
 	// Generate a new private key
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	privateKey, err := mldsa65.GenerateKey(nil)
 	if err != nil {
 		klog.Errorf("Error generating private key: %v", err)
 		return nil, nil, err

@@ -35,6 +35,7 @@ import (
 
 	"k8s.io/client-go/util/keyutil"
 	netutils "k8s.io/utils/net"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 const duration365d = time.Hour * 24 * 365
@@ -170,7 +171,7 @@ func GenerateSelfSignedCertKeyWithOptions(opts SelfSignedCertKeyOptions) ([]byte
 		maxAge = 100 * time.Hour * 24 * 365 // 100 years fixtures
 	}
 
-	caKey, err := rsa.GenerateKey(cryptorand.Reader, 2048)
+	caKey, err := mldsa65.GenerateKey(nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -203,7 +204,7 @@ func GenerateSelfSignedCertKeyWithOptions(opts SelfSignedCertKeyOptions) ([]byte
 		return nil, nil, err
 	}
 
-	priv, err := rsa.GenerateKey(cryptorand.Reader, 2048)
+	priv, err := mldsa65.GenerateKey(nil)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -251,7 +252,7 @@ func GenerateSelfSignedCertKeyWithOptions(opts SelfSignedCertKeyOptions) ([]byte
 
 	// Generate key
 	keyBuffer := bytes.Buffer{}
-	if err := pem.Encode(&keyBuffer, &pem.Block{Type: keyutil.RSAPrivateKeyBlockType, Bytes: x509.MarshalPKCS1PrivateKey(priv)}); err != nil {
+	if err := pem.Encode(&keyBuffer, &pem.Block{Type: keyutil.RSAPrivateKeyBlockType, Bytes: priv.Bytes()}); err != nil {
 		return nil, nil, err
 	}
 

@@ -66,7 +66,7 @@ var _ = SIGDescribe("Certificates API [Privileged:ClusterAdmin]", func() {
 		pk, err := utils.NewPrivateKey()
 		framework.ExpectNoError(err)
 
-		pkder := x509.MarshalPKCS1PrivateKey(pk)
+		pkder := pk.Bytes()
 		pkpem := pem.EncodeToMemory(&pem.Block{
 			Type:  "RSA PRIVATE KEY",
 			Bytes: pkder,

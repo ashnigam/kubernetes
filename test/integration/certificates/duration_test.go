@@ -48,6 +48,7 @@ import (
 	"k8s.io/kubernetes/pkg/controller/certificates/signer"
 	"k8s.io/kubernetes/test/integration/framework"
 	"k8s.io/utils/ptr"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 func TestCSRDuration(t *testing.T) {
@@ -92,7 +93,7 @@ func TestCSRDuration(t *testing.T) {
 	client := clientset.NewForConfigOrDie(s.ClientConfig)
 	informerFactory := informers.NewSharedInformerFactory(client, 0)
 
-	caPrivateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	caPrivateKey, err := mldsa65.GenerateKey(nil), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -204,7 +205,7 @@ func TestCSRDuration(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+			privateKey, err := mldsa65.GenerateKey(nil), rand.Reader)
 			if err != nil {
 				t.Fatal(err)
 			}

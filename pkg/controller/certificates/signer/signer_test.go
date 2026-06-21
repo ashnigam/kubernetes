@@ -40,6 +40,7 @@ import (
 	capihelper "k8s.io/kubernetes/pkg/apis/certificates/v1"
 	"k8s.io/kubernetes/pkg/controller/certificates"
 	testingclock "k8s.io/utils/clock/testing"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 // ignoreUnset is an option that ignores fields that are unset on the right
@@ -410,7 +411,7 @@ type csrBuilder struct {
 }
 
 func makeTestCSR(b csrBuilder) *capi.CertificateSigningRequest {
-	pk, err := ecdsa.GenerateKey(elliptic.P256(), insecureRand)
+	pk, err := mldsa65.GenerateKey(nil), insecureRand)
 	if err != nil {
 		panic(err)
 	}
