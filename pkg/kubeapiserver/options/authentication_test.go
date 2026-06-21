@@ -53,6 +53,7 @@ import (
 	kubeauthenticator "k8s.io/kubernetes/pkg/kubeapiserver/authenticator"
 	"k8s.io/kubernetes/pkg/serviceaccount"
 	"k8s.io/utils/ptr"
+	"github.com/cloudflare/circl/sign/mldsa/mldsa65"
 )
 
 func TestAuthenticationValidate(t *testing.T) {
@@ -1614,7 +1615,7 @@ func TestToAuthenticationConfigForServiceAccount(t *testing.T) {
 	dummyExternalGetter := &dummyPublicKeyGetter{}
 	keyFileName := "public_key.pem"
 
-	key1, err := rsa.GenerateKey(rand.Reader, 2048)
+	key1, err := mldsa65.GenerateKey(nil)
 	if err != nil {
 		panic("Error while generating first RSA key")
 	}
